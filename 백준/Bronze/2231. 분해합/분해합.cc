@@ -1,38 +1,29 @@
 #include <iostream>
 using namespace std;
 
-int find_min(int temp, int i) {
+int find_min(int i) {
+	int sum = i;
 	while (i > 0)
 	{
-		temp += i % 10;
+		sum += i % 10;
 		i /= 10;
 	}
-	return temp;
+	return sum;
 }
 int main() {
 	ios::sync_with_stdio(false); cout.tie(NULL); cin.tie(NULL);
-	int n, temp = 0, result = 0, cnt = 0;
+	int n;
 	cin >> n;
 
 	for (int i = 1; i < n; i++)
 	{
-		temp = i;
-		if (find_min(temp, i) == n) {
-			if (cnt == 0){
-				result = i;
-				cnt = 1;
-			}
-			else{
-				if (i< result)
-				{
-					result = i;
-				}
-			}
-			
+		if (find_min(i) == n) {
+			cout << i;
+			return 0;
 		}
 	}
 
-	cout << result;
+	cout << 0;
 
 	return 0;
 }
