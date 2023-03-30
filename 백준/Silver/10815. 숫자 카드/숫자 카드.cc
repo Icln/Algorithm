@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-vector <int> v;
+vector <bool> v(20000001, false);
 int main() {
 	ios::sync_with_stdio(false); cout.tie(NULL); cin.tie(NULL);
 	int n,tmp;
@@ -11,14 +11,15 @@ int main() {
 	for (int i = 0; i < n; i++)
 	{
 		cin >> tmp;
-		v.push_back(tmp);
+		v[tmp + 10000000] = true;
 	}
-	sort(v.begin(), v.end());
+	
 	cin >> n;
 	for (int i = 0; i < n; i++)
 	{
 		cin >> tmp;
-		cout << binary_search(v.begin(), v.end(), tmp)<<' ';
+		if (v[tmp + 10000000]) cout << "1 ";
+		else cout << "0 ";
 	}
 	
 	return 0;
