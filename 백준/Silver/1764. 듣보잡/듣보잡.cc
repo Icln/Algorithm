@@ -1,35 +1,26 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <algorithm>
 using namespace std;
 int main() {
 	ios::sync_with_stdio(false); cout.tie(NULL); cin.tie(NULL);
 	int n, m;
-	map <string, int> ear;
-	map <string, int> eye;
-	cin >> n >> m;
 	string s;
-	for (int i = 0; i < n; i++)
-	{
-		cin >> s;
-		ear.insert({s,1});
-	}
-	for (int i = 0; i < m; i++)
-	{
-		cin >> s;
-		eye.insert({s,1});
-	}
-	int result = 0;
+	map <string, int> mm;
 	vector<string> v;
-	for (auto i : eye)
-	{
-		if (ear.count(i.first)) {
-			result++;
-			v.push_back(i.first);
-		}
-	}
+	cin >> n >> m;
 	
-	cout << result << '\n';
+	for (int i = 0; i < n + m; i++)
+	{
+		cin >> s;
+		mm[s]++;
+		if (mm[s] > 1)
+			v.push_back(s);
+	}
+
+	sort(v.begin(), v.end());
+	cout << v.size() << '\n';
 	for (auto i : v)
 	{
 		cout << i << '\n';
