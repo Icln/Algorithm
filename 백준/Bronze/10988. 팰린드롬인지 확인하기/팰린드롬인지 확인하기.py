@@ -1,4 +1,4 @@
-a = list(str(input()))
+a = list(input())
 if list(reversed(a)) == a :
     print(1)
 else :
