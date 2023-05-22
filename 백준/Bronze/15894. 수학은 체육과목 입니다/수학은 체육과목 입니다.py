@@ -1,4 +1,1 @@
-import sys
-input = sys.stdin.readline
-x = int(input())
-print(4 * x)
+print(int(input()) * 4)
