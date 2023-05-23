@@ -1,11 +1,7 @@
-from itertools import permutations
+from itertools import *
+
 n, m = map(int,input().split())
 arr = list(map(int,input().split()))
-p = list(permutations(arr,3))
 
-mx = 0
-for i in p:
-    if sum(i) >= mx and sum(i) <= m :
-         mx = sum(i)
-
-print(mx)
+s = [sum(c) for c in combinations(arr,3) if sum(c) <= m]
+print(max(s))
