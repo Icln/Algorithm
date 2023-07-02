@@ -1,31 +1,20 @@
-import sys
-import math
-input = sys.stdin.readline
-def checkPrime(x):
-    if x < 2:
-        return False
-    elif x == 2 :
-        return True
-    elif x % 2 == 0:
-        return False
-    else :
-        for i in range(3,int(math.sqrt(x)) + 1, 2):
-            if x % i == 0:
-                return False
-        return True
-
-
-def numPrime(x):
-    result = 0
-    for i in range(x + 1, 2 * x +1):
-        if checkPrime(i):
-            result += 1
-    return result
-
+num = 123456*2+1
+num_list = [1]*num
+for i in range(1, num):
+    if i == 1:
+        continue
+    for j in range(2, int(i**0.5)+1):
+        if i % j == 0:
+            num_list[i] = 0
+            break
 
 while True:
     n = int(input())
+    
     if n == 0:
         break
-    else:
-        print(numPrime(n))
+    
+    prime = 0
+    for i in range(n+1, 2*n+1):
+            prime += num_list[i]
+    print(prime)
