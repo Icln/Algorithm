@@ -4,11 +4,11 @@
 
 ### 성능 요약
 
-메모리: 2020 KB, 시간: 0 ms
+메모리: 31256 KB, 시간: 40 ms
 
 ### 분류
 
-구현(implementation), 수학(math), 조합론(combinatorics)
+구현, 수학, 조합론
 
 ### 문제 설명
 
