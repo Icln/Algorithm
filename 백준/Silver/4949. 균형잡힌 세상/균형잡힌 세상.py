@@ -3,24 +3,24 @@ input = sys.stdin.readline
 
 while True:
     stack = []
-    n = list(input().rstrip())
+    n = input()
     if n[0] == '.':
         break
     for i in n:
-        if i == ')':
+        if i == '(' or i =='[':
+            stack.append(i)
+        elif i == ')':
             if len(stack) != 0 and stack[-1] == '(':
                 stack.pop()
             else :
                 stack.append(')')
-        elif i == '(':
-            stack.append(i)
-        elif i == '[':
-            stack.append(i)
+                break
         elif i == ']':
             if len(stack) != 0 and stack[-1] == '[':
                 stack.pop()
             else :
-                stack.append(']')    
+                stack.append(']')
+                break    
     if len(stack) != 0:
         print('no')
     else :
