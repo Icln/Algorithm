@@ -1,72 +1,28 @@
 import sys
 input = sys.stdin.readline
+
 n = int(input())
 numbers = list(map(int, input().split()))
-cnt = list(map(int, input().split()))
-operator = []
-result = set()
+add, sub, mul, div = map(int, input().split())
 
-for i in range(4):
-    for j in range(cnt[i]):
-        if i == 0:
-            operator.append('+')
-        elif i == 1:
-            operator.append('-')
-        elif i == 2:                
-            operator.append('*')
-        elif i == 3:
-            operator.append('/')
+max_result = -int(1e9)
+min_result = int(1e9)
 
-def check(x, y, op):
-    if op == '+':
-        return x + y
-    elif op == '-':
-        return x - y
-    elif op == '*':
-        return x * y
-    elif op == '/':
-        return div(x,y)
+def dfs(add, sub, mul, div, cal, idx):
+    global max_result, min_result
+    if idx == n:
+        max_result = max(max_result, cal)
+        min_result = min(min_result, cal)
+        return
+    if add:
+        dfs(add - 1, sub, mul, div, cal + numbers[idx], idx + 1)
+    if sub:
+        dfs(add, sub - 1, mul, div, cal - numbers[idx], idx + 1)
+    if mul:
+        dfs(add, sub, mul - 1, div, cal * numbers[idx], idx + 1)
+    if div:
+        dfs(add, sub, mul, div - 1, int(cal / numbers[idx]), idx + 1)
 
-def div(x, y):
-    global flag
-    if y == 0:
-        flag = False
-        return 
-    if x < 0:
-        return -(abs(x) // y)
-    else: return x // y
-
-s = sum(cnt)
-new_operator = []
-def dfs(n):
-    if n == s:
-        op = []
-        for i in temp:
-            op.append(operator[i])
-        new_operator.append(op)
-        return 
-
-    for i in range(s):
-        if i not in temp:
-            temp.append(i)
-            dfs(n+1)
-            temp.pop()
-
-temp = []
-dfs(0)
-flag = True
-new_operator = [list(x) for x in set(tuple(row) for row in new_operator)]
-for i in range(len(new_operator)):
-    new_numbers = numbers[:]
-    for j in range(n-1):
-        cal = check(new_numbers[j], new_numbers[j+1], new_operator[i][j])
-        if not flag:
-            break
-        else:
-            new_numbers[j+1] = cal
-    if flag:
-        result.add(cal)
-    else:    
-        flag = True
-print(max(result))
-print(min(result))
+dfs(add, sub, mul, div, numbers[0], 1)
+print(max_result)
+print(min_result)
