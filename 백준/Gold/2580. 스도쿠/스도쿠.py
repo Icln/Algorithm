@@ -30,6 +30,6 @@ def dfs(n):
     for i in numbers:
        board[x][y] = i
        dfs(n + 1)
-    board[x][y] = 0    
+       board[x][y] = 0    
     
 dfs(0)
