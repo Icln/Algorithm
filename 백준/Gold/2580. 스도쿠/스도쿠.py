@@ -9,25 +9,25 @@ def dfs(n):
     global board
     if n == len(blank):
         for i in board:
-            print(*i, sep=' ')
+            print(*i)
         exit()    
     
     x,y = blank[n]
     a,b = x//3, y//3
-    temp = num[:]
-    
-    for i in range(a * 3, (a + 1) * 3):
-        for j in range(b * 3, (b + 1) * 3):
-            if board[i][j] in temp:
-                temp.remove(board[i][j])
+    numbers = num[:]
     
     for i in range(9):
-        if board[x][i] in temp:
-            temp.remove(board[x][i])
-        if board[i][y] in temp:
-            temp.remove(board[i][y])
+        if board[x][i] in numbers:
+            numbers.remove(board[x][i])
+        if board[i][y] in numbers:
+            numbers.remove(board[i][y])
+
+    for i in range(a * 3, (a + 1) * 3):
+        for j in range(b * 3, (b + 1) * 3):
+            if board[i][j] in numbers:
+                numbers.remove(board[i][j])
     
-    for i in temp:
+    for i in numbers:
        board[x][y] = i
        dfs(n + 1)
     board[x][y] = 0    
