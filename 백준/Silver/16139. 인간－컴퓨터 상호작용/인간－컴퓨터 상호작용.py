@@ -1,22 +1,20 @@
 import sys
 input = sys.stdin.readline
 
-s = list(input().rstrip())
+s = '0' + input().rstrip()
 n = int(input())
 
-arr = [[0 for _ in range(26)] for _ in range(len(s))]
+memo = [[0] * (len(s)+1) for i in range(26)]
 
-for i in range(len(s)):
+
+diff = ord('a')
+for i in range(1, len(s)):
     for j in range(26):
-        if ord(s[i]) - 97 == j:
-            arr[i][j] = arr[i-1][j] + 1
+        if ord(s[i]) - diff == j:
+            memo[j][i] = memo[j][i-1] + 1
         else:
-            arr[i][j] = arr[i-1][j]
-
-
+            memo[j][i] = memo[j][i-1]
 for i in range(n):
-    a, start, end = input().split()
-    if int(start) == 0:
-        print(arr[int(end)][ord(a) - 97])
-    else:
-        print(arr[int(end)][ord(a) - 97] - arr[int(start) - 1][ord(a) - 97]) 
+    alph, l, r = input().split()
+    l, r = map(int, (l, r))
+    print(memo[ord(alph)-diff][r+1]-memo[ord(alph)-diff][l])
