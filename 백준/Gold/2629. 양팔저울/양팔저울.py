@@ -10,13 +10,12 @@ dp[0] = True
 
 for weight in weights:
     tmp = set()
-    for i in range(15001):
+    for i in range(15001 - weight):
         if dp[i]:
             tmp.add(i + weight)
             tmp.add(abs(i - weight))
     for j in tmp:
-        if j <= 15000:
-            dp[j] = True
+        dp[j] = True
     
 for i in marbles:
     if i > 15000:
