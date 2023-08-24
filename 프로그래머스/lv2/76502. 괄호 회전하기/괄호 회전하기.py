@@ -4,7 +4,6 @@ def solution(s):
     answer = 0
     for _ in range(len(s)):
         answer += check(s)
-        
         s.rotate(-1) 
     return answer
 
