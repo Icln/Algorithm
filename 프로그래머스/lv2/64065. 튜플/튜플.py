@@ -1,6 +1,5 @@
 def solution(s):
-    s = s[2 : -2]
-    s = s.split('},{')
+    s = s[2: -2].split('},{')
     s.sort(key = lambda x : len(x))
     arr = []
     
