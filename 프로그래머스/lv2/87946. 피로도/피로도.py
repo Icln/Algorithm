@@ -9,5 +9,6 @@ def solution(k, dungeons):
                 sum -= j[1]
                 tmp += 1
         answer = max(answer, tmp)
-    
+        if answer == len(dungeons):
+            break
     return answer
