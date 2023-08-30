@@ -28,8 +28,6 @@ def check(n):
     elif n % 2 == 0:
         return False
     for i in range(3, int(math.sqrt(n)) + 1, 2):
-        if n % i == 0 and n // i == 1:
-            return True
         if n % i == 0 and n // i != 1:
             return False
     return True
