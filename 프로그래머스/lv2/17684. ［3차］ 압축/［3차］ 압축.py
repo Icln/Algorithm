@@ -1,24 +1,20 @@
-alpha =['','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 def solution(msg):
     answer = []
+    alpha = [''] + [chr(ord('A') + i) for i in range(26)]
     idx = 0
-    while True:
+
+    while idx < len(msg):
         tmp = ''
-        l = idx
-        while True:
-            if l < len(msg):
-                tmp += msg[l]
-                if tmp in alpha:
-                    l += 1
-                    continue 
-            if tmp in alpha:    
-                answer.append(alpha.index(tmp))
-            else:
-                answer.append(alpha.index(tmp[:-1]))
-            alpha.append(tmp)    
-            break
+        while idx < len(msg):
+            tmp += msg[idx]
+            if tmp not in alpha:
+                break
+            idx += 1
         
-        if l == len(msg):
-            break        
-        idx += len(tmp) - 1 
+        if tmp in alpha:    
+            answer.append(alpha.index(tmp))
+        else:
+            answer.append(alpha.index(tmp[:-1]))    
+        alpha.append(tmp)
+    
     return answer
