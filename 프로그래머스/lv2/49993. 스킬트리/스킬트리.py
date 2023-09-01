@@ -1,17 +1,10 @@
-def solution(skill, skill_trees):
-    answer = 0
-    for i in skill_trees:
-        tmp = ''
-        for j in i:
-            if j in skill:
-                tmp += j
-        flag = True 
-        for j in tmp:
-            if tmp.index(j) != skill.index(j):
-                flag = False
-                break
-        if flag:
-            answer +=1
-        
-    
+def solution(skill,skill_tree):
+    answer=0
+    for i in skill_tree:
+        skillist=''
+        for z in i:
+            if z in skill:
+                skillist+=z
+        if skillist==skill[0:len(skillist)]:
+            answer+=1
     return answer
