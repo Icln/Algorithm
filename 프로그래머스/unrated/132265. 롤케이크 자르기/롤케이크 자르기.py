@@ -1,25 +1,22 @@
 def solution(topping):
-    if len(topping) % 2 == 0:
-        left, right = len(topping) // 2 - 1, len(topping) // 2 + 1     
-    else: 
-        left, right = len(topping) // 2, len(topping) // 2 + 2
-    
+    kind = set(topping)
+    Front = [1] * len(topping)
+    Back = [0] * len(topping)
     answer = 0
+    cnt = 0
     
-    while True:
-        if len(set(topping[:left + 1])) == len(set(topping[left + 1:])):
-            answer += 1
-            left -= 1
-        else:
-            break
+    for i in range(len(topping)):
+        if topping[i] in kind:
+            cnt += 1
+            kind.remove(topping[i])
+        Front[i] = cnt
+
+    for i in range(len(topping) - 1, -1, -1):
+        Back[i] = len(kind)
+        kind.add(topping.pop())
         
+    for i in range(len(Front)):
+        if Front[i] == Back[i]:
+            answer += 1
             
-    while True:
-        if len(set(topping[:right])) == len(set(topping[right:])):       
-            answer += 1
-            right += 1
-        else:
-            break
-        
-    
-    return  answer
+    return answer
