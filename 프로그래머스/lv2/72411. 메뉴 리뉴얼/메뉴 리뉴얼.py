@@ -9,15 +9,15 @@ def solution(orders, course):
                 k = list(map(str, k))
                 k.sort()
                 s = ''.join(k)
-                
+
                 if s not in tmp:
                     tmp[s] = 1
                 else:
                     tmp[s] += 1
                 cnt = max(cnt, tmp[s])
-    
+
         for key, val in tmp.items():
             if val == cnt and cnt > 1:
                 answer.append(key)
-        answer.sort()
+    answer.sort()
     return answer
