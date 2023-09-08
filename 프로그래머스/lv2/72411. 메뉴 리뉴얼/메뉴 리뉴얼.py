@@ -1,23 +1,18 @@
 from itertools import combinations
+from collections import Counter
 def solution(orders, course):
     answer = []
     for i in course:
-        tmp = dict()
-        cnt = 0
+        tmp = Counter()
         for j in orders:
             for k in combinations(j, i):
-                k = list(map(str, k))
-                k.sort()
-                s = ''.join(k)
-
-                if s not in tmp:
-                    tmp[s] = 1
-                else:
-                    tmp[s] += 1
-                cnt = max(cnt, tmp[s])
-
+                tmp[''.join(sorted(k))] += 1
+                
+        cnt = tmp.most_common(1)
+        if cnt and cnt[0][1] < 2:
+            continue
         for key, val in tmp.items():
-            if val == cnt and cnt > 1:
+            if val == cnt[0][1]:
                 answer.append(key)
-    answer.sort()
-    return answer
+    
+    return sorted(answer)
