@@ -1,5 +1,4 @@
 import re
-from math import factorial
 from itertools import permutations
 def cal(x, y, op):
     if op == '+':
@@ -7,6 +6,7 @@ def cal(x, y, op):
     elif op == '-':
         return x - y
     return x * y
+
 def solution(expression):
     operator = set(re.findall("[^0-9]+", expression))
     answer = 0
