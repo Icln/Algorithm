@@ -1,0 +1,6 @@
+SELECT b.CATEGORY, SUM(SALES) as TOTAL_SALES
+FROM BOOK as b
+    INNER JOIN BOOK_SALES as s ON b.BOOK_ID = s.BOOK_ID
+WHERE s.sales_date like "2022-01-%"
+GROUP BY b.category
+ORDER BY b.category ASC 
