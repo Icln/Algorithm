@@ -1,7 +1,6 @@
 from itertools import combinations
 def solution(relation):
     idx = [i for i in range(len(relation[0]))]
-    visit = [False] * len(relation[0])
     key = []
     for i in range(1, len(relation) + 1):
         for j in combinations(idx, i):
