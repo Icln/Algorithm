@@ -12,6 +12,8 @@ for i, j in enumerate(add):
 result = 0
 for i in range(n):
     tmp, cnt = 0, 0
+    if 1 not in room:
+        break
     while cnt < n:
         if room[cnt] == 1:
             if cnt == n - 1 and room[0] == 1:
