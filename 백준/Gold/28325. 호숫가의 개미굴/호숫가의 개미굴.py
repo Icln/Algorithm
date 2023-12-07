@@ -24,5 +24,7 @@ for i in range(n):
         cnt += 1
     result = max(result, tmp)
     room.rotate(1)
+    if 0 not in room:
+        break
 
 print(result + sum(add))
