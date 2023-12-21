@@ -24,7 +24,6 @@ for i in range(8):
 for k in range(8):
     for i in range(8):
         for j in range(8):
-            if time[i][j] > time[i][k] + time[k][j]:
-                time[i][j] = time[i][k] + time[k][j]
+            time[i][j] = min(time[i][j], time[i][k] + time[k][j])
 
 print(time[0][1])
