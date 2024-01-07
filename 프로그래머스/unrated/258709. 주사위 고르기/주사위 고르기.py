@@ -19,10 +19,10 @@ def solution(dice):
         arrB.sort()
         
         cnt, cur = 0, 0
-        for tmp in arrB:
-            while cur < len(arrA) and arrA[cur] <= tmp:
+        for tmp in arrA:
+            while cur < len(arrB) and arrB[cur] < tmp:
                 cur += 1
-            cnt += len(arrA) - cur
+            cnt += cur
         result.append([a, cnt])
     
     result.sort(key=lambda x: x[1], reverse = True)
