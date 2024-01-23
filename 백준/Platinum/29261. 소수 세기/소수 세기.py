@@ -7,10 +7,10 @@ def check(x, y):
     if x == 1 or y == 1:
         return
     while True:
-        if not prime[x] or not prime[y]:
+        if prime[x] or prime[y]:
             x += 1
             y -= 1
-        if prime[x] and prime[y]:
+        if not prime[x] and not prime[y]:
             result += 2
             break
 
@@ -19,16 +19,10 @@ def check(x, y):
 
 n = int(input())
 prime = defaultdict(bool)
-prime[2] = True
 
-for i in range(3, n + 1, 2):
-    isPrime = True
-    for j in range(3, int(i ** 0.5) + 1, 2):
-        if i % j == 0:
-            isPrime = False
-            break
-    if isPrime:
-        prime[i] = True
+for i in range(2, int(n ** 0.5) + 1):
+    for j in range(i * 2, n + 1, i):
+        prime[j] = True
 
 result = 1
 check((n - 1) // 2, (n - 1) - ((n - 1) // 2))
