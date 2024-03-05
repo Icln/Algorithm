@@ -1,25 +1,24 @@
+from collections import deque
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(10 ** 9)
 
-def dfs(x, y):
-    global size
-    if x < 0 or x >= m or y < 0 or y >= n:
-        return False
-    if arr[x][y] == 1:
-        return False
-
-    arr[x][y] = 1
-    size += 1
-
-    for i in range(4):
-        dfs(x + dx[i], y + dy[i])
-    return True
+def bfs(x, y):
+    q = deque([(x, y)])
+    arr[x][y] = 1 
+    size = 1    
+    while q:
+        y, x = q.popleft()
+        for i in range(4):
+            nx, ny = x + dx[i], y + dy[i]
+            if 0 <= ny < m and 0 <= nx < n and arr[ny][nx] == 0:
+                arr[ny][nx] = 1
+                q.append((ny, nx))
+                size += 1
+    return size
 
 dx, dy = [-1, 1, 0, 0], [0, 0, -1, 1]
 m, n, k = map(int, input().split())
 arr = [[0] * n for _ in range(m)]
-size = 0
 
 for _ in range(k):
     x1, y1, x2, y2 = map(int, input().split())
@@ -27,14 +26,11 @@ for _ in range(k):
         for j in range(x1, x2):
             arr[i][j] = 1
 
-sizes = []
+result = []
 for i in range(m):
     for j in range(n):
-        if dfs(i, j):
-            sizes.append(size)
-            size = 0
+        if not arr[i][j]:
+            result.append(bfs(i, j))
 
-sizes.sort()
-print(len(sizes))
-for size in sizes:
-    print(size, end=' ')
+print(len(result))
+print(*sorted(result))
