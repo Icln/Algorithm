@@ -2,18 +2,10 @@ import sys
 input = sys.stdin.readline
 
 n, d, k, c = map(int, input().split())
-sushi = [int(input())for _ in range(n)]
-l, r = 0, k
-answer = 0
-while l < n:
-  s = set()
-  for i in range(l, r):
-    s.add(sushi[i % n])
-  if c not in s:
+sushi = [int(input()) for _ in range(n)] * 2
+cnt = 0
+for i in range(n):
+    s = set(sushi[i : i + k])
     s.add(c)
-
-  answer = max(answer, len(s))
-  l += 1
-  r += 1
-
-print(answer)
+    cnt = max(cnt, len(s))
+print(cnt)
