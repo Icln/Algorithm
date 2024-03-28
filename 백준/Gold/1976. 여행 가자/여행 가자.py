@@ -1,17 +1,20 @@
-from collections import deque, defaultdict
 import sys
 input = sys.stdin.readline
 
 
-def bfs(s):
-    q = deque([(s)])
-    visited[s] = 1
-    while q:
-        cur = q.popleft()
-        for idx, next in enumerate(graph[cur]):
-            if next and not visited[idx]:
-                visited[idx] = 1
-                q.append(idx)
+def union(x, y):
+    x = find(x)
+    y = find(y)
+    if x < y:
+        parents[y] = x
+    else:
+        parents[x] = y
+
+
+def find(x):
+    if x != parents[x]:
+        parents[x] = find(parents[x])
+    return parents[x]
 
 
 if __name__ == "__main__":
@@ -19,16 +22,19 @@ if __name__ == "__main__":
     m = int(input())
 
     graph = []
-    for _ in range(n):
-        graph.append(list(map(int, input().split())))
+    parents = [i for i in range(n + 1)]
+    for i in range(n):
+        graph = list(map(int, input().split()))
+        for j in range(n):
+            if graph[j]:
+                union(i + 1, j + 1)
 
     cities = list(map(int, input().split()))
-    visited = defaultdict(int)
-    bfs(cities[0] - 1)
+    start = parents[cities[0]]
 
-    flag = True
-    for city in cities:
-        if not visited[city - 1]:
-            flag = False
-
-    print('YES') if flag else print('NO')
+    for i in range(1, m):
+        if parents[cities[i]] != start:
+            print('NO')
+            break
+    else:
+        print('YES')
