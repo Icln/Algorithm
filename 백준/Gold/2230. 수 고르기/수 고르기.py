@@ -8,14 +8,10 @@ if __name__ == "__main__":
 
     start, end = 0, 0
     cur = 2000000001
-    while end < n:
-        tmp = arr[end] - arr[start]
-        if tmp < m:
+    while start <= end and end < n:
+        if arr[end] - arr[start] < m:
             end += 1
-        elif tmp > m:
-            cur = min(cur, tmp)
-            start += 1
         else:
-            cur = m
-            break
+            cur = min(cur, arr[end] - arr[start])
+            start += 1
     print(cur)
