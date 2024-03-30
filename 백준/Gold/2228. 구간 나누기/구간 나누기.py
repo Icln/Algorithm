@@ -1,23 +1,15 @@
-import sys
+import sys, math
 input = sys.stdin.readline
 
 if __name__ == "__main__":
     n, m = map(int, input().split())
-    prefixSum = [0] * (n + 1)
-    for i in range(n):
-        prefixSum[i + 1] = prefixSum[i] + int(input())
+    c = [[0] + [-1e9] * m for _ in range(n + 1)]
+    nc = [[0] + [-1e9] * m for _ in range(n + 1)]
 
-    dp = [[0] + [-1e9] * m for _ in range(n + 1)]
-    dp[1][1] = prefixSum[1]
+    for i in range(1, n + 1):
+        num = int(input())
+        for j in range(1, min(m, math.ceil(i / 2)) + 1):
+            c[i][j] = max(c[i - 1][j], nc[i - 1][j - 1]) + num
+            nc[i][j] = max(nc[i - 1][j], c[i - 1][j])
 
-    for i in range(2, n + 1):
-        for j in range(1, m + 1):
-            dp[i][j] = dp[i - 1][j]
-            if j == 1:
-                dp[i][j] = max(dp[i][j], prefixSum[i])
-
-            for k in range(i - 1):
-                s = prefixSum[i] - prefixSum[k + 1]
-                dp[i][j] = max(dp[i][j], dp[k][j - 1] + s)
-
-    print(dp[n][m])
+    print(max(c[n][m], nc[n][m]))
