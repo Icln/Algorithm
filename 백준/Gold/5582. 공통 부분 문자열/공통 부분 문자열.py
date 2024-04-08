@@ -5,12 +5,15 @@ if __name__ == "__main__":
     s = input().rstrip()
     t = input().rstrip()
 
-    dp = [[0] * (len(t) + 1) for _ in range(len(s) + 1)]
-    result = 0
-    for i in range(1, len(s) + 1):
-        for j in range(1, len(t) + 1):
-            if s[i - 1] == t[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1] + 1
-                result = max(result, dp[i][j])
+    if len(s) > len(t):
+        s, t = t, s
+
+    start, end, result = 0, 0, 0
+    while start <= end < len(s):
+        if s[start: end + 1] in t:
+            result = max(result, end - start + 1)
+        else:
+            start += 1
+        end += 1
 
     print(result)
