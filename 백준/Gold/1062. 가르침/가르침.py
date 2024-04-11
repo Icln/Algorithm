@@ -1,37 +1,45 @@
-from itertools import combinations
-from collections import defaultdict
 import sys
 input = sys.stdin.readline
 
-if __name__ == "__main__":
+def check():
+    cnt = 0
+    for word in words:
+        flag = True
+        for s in word:
+            if not alpha[ord(s) - 97]:
+                flag = False
+                break
+        if flag:
+            cnt += 1
+    return cnt
+
+
+def dfs(start, depth):
+    global ans
+
+    if depth == k:
+        ans = max(ans, check())
+        return
+
+    for i in range(start, 26):
+        if not alpha[i]:
+            alpha[i] = True
+            dfs(i, depth + 1)
+            alpha[i] = False
+
+if __name__ == '__main__':
     n, k = map(int, input().split())
+    alpha = [False for _ in range(26)]
+    words = [input().rstrip() for _ in range(n)]
+    ans = 0
+
     if k < 5:
         print(0)
-        sys.exit(0)
+    elif k == 26:
+        print(n)
+    else:
+        for c in ('a', 'c', 'i', 'n', 't'):
+            alpha[ord(c) - ord('a')] = True
 
-    cnt = defaultdict(int)
-    d = {'a', 'c', 'i', 't', 'n'}
-    alpha = [chr(97 + i) for i in range(26) if chr(97 + i) not in d]
-    for i in d:
-        cnt[i] = 1
-
-    strings = [input().rstrip() for _ in range(n)]
-    result = 0
-    for a in combinations(alpha, k - 5):
-        tmp = cnt.copy()
-        for i in a:
-            tmp[i] = 1
-
-        ans = 0
-        for s in strings:
-            sub = s[4:-4]
-            flag = True
-            for i in sub:
-                if tmp[i] == 0:
-                    flag = False
-                    break
-            if flag:
-                ans += 1
-
-        result = max(result, ans)
-    print(result)
+        dfs(0, 5)
+        print(ans)
