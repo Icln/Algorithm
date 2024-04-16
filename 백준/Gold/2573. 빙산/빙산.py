@@ -1,12 +1,14 @@
 from collections import deque
 import sys
 input = sys.stdin.readline
-def check(sx,sy):
+def bfs(sx,sy):
     q = deque([(sx, sy)])
     visited[sx][sy] = 1
+    cnt = []
     while q:
         x, y = q.popleft()
         tmp = 0
+
         for dx, dy in d:
             nx, ny = x + dx, y + dy
             if 0 <= nx < n and 0 <= ny < m:
@@ -15,8 +17,12 @@ def check(sx,sy):
                     q.append((nx, ny))
                 if not arr[nx][ny]:
                     tmp += 1
-        cnt[x][y] = tmp
-    
+        if tmp > 0:
+            cnt.append((x, y, tmp))
+
+    for x, y, z in cnt:
+        arr[x][y] = max(0, arr[x][y] - z)
+
 
 if __name__ == "__main__":
     n, m = map(int, input().split())
@@ -25,35 +31,18 @@ if __name__ == "__main__":
     result = 0
     while True:
         visited = [[0] * m for _ in range(n)]
-        cnt = [[0] * m for _ in range(n)]
         num = 0
         for i in range(1, n - 1):
             for j in range(1, m - 1):
                 if arr[i][j] and not visited[i][j]:
-                    check(i, j)
+                    bfs(i, j)
                     num += 1
 
-        for i in range(1, n - 1):
-            for j in range(1, m - 1):
-                tmp = arr[i][j] - cnt[i][j]
-                if tmp <= 0:
-                    arr[i][j] = 0
-                else:
-                    arr[i][j] = tmp
-        
-        if num >= 2:
-            print(result)
-            break
         result += 1
-        
-        flag = True
-        for i in range(1, n - 1):
-            for j in range(1, m - 1):
-                if arr[i][j]:
-                    flag = False
-                    break
-        
-        if flag:
+        if not num:
             print(0)
+            exit()
+
+        if num >= 2:
+            print(result - 1)
             break
-                   
