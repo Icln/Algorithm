@@ -20,7 +20,7 @@ public class Main {
 				if (0 <= nx && nx < m && 0 <= ny && ny < n){
 					if (arr[nx][ny] == 0){
 						arr[nx][ny] =  arr[x][y] + 1;
-						q.add(new int[]{nx, ny});
+						q.offer(new int[]{nx, ny});
 					}
 				}
 			}
@@ -51,7 +51,7 @@ public class Main {
 			for (int j = 0; j < n; j++){
 				arr[i][j] = Integer.parseInt(st.nextToken());
 				if (arr[i][j] == 1){
-					q.add(new int[]{i, j});
+					q.offer(new int[]{i, j});
 				}
 			}
 		}
