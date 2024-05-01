@@ -24,8 +24,7 @@ class Solution {
         }
         
         List<Integer> list = new ArrayList<>(map.keySet());
-        list.sort((x,y) -> Double.compare(map.get(y), map.get(x)));
-        
+        Collections.sort(list, (x,y) -> Double.compare(map.get(y), map.get(x)));
         return list.stream().mapToInt(i->i).toArray();
     }
 }
