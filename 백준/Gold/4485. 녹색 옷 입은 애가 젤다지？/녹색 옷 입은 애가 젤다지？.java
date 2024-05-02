@@ -7,15 +7,22 @@ public class Main {
 	static int[][] arr;
 	static int[] dx = {-1, 1, 0, 0};
 	static int[] dy = {0, 0, -1, 1};
-	static PriorityQueue<int[]> q = new PriorityQueue<>(new Comparator<int []>() {
-		@Override
-		public int compare(int[] o1, int[] o2) {
-			if (o1[0] == o2[0]) return o1[1] - o2[1];
-			return o1[0] - o2[0];
+	static Queue<Node> q = new PriorityQueue<>();
+	static class Node implements Comparable<Node>{
+		int x, y, cost;
+		public Node(int x, int y, int cost){
+			this.x = x;
+			this.y = y;
+			this.cost = cost;
 		}
-	});
+
+		@Override
+		public int compareTo(Node o){
+			return Integer.compare(this.cost, o.cost);
+		}
+	}
 	private static int dijkstra(){
-		q.offer(new int[]{arr[0][0], 0, 0});
+		q.offer(new Node(0, 0, arr[0][0]));
 		int[][] dist = new int[n][n];
 		for (int i = 0; i < n; i++){
 			for (int j = 0; j < n; j++){
@@ -25,10 +32,10 @@ public class Main {
 
 		dist[0][0] = arr[0][0];
 		while (!q.isEmpty()){
-			int[] tmp = q.poll();
-			int cost = tmp[0];
-			int x = tmp[1];
-			int y = tmp[2];
+			Node tmp = q.poll();
+			int cost = tmp.cost;
+			int x = tmp.x;
+			int y = tmp.y;
 
 			if (dist[x][y] < cost){
 				continue;
@@ -39,7 +46,7 @@ public class Main {
 				if (0 <= nx && nx < n && 0 <= ny && ny < n){
 					if (arr[nx][ny] + cost < dist[nx][ny]){
 						dist[nx][ny] = arr[nx][ny] + cost;
-						q.offer(new int[]{dist[nx][ny], nx, ny});
+						q.offer(new Node(nx, ny, dist[nx][ny]));
 					}
 
 				}
