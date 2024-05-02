@@ -36,10 +36,10 @@ public class Main {
 
 			for (Node tmp: graph[cur]){
 				int next = tmp.cur;
-				if (dist[cur] + tmp.cost < dist[next]){
+				if (cost + tmp.cost < dist[next]){
 					if (dist[next] == INF)
 						cnt ++;
-					dist[next] = dist[cur] + tmp.cost;
+					dist[next] = cost + tmp.cost;
 					q.offer(new Node(next, dist[next]));
 				}
 			}
