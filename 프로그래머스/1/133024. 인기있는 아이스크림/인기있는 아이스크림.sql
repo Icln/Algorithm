@@ -1,1 +1,3 @@
-SELECT FLAVOR FROM FIRST_HALF ORDER BY TOTAL_ORDER DESC, SHIPMENT_ID;
+select flavor
+from FIRST_HALF
+order by total_order desc
