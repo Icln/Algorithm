@@ -1,4 +1,4 @@
-SELECT f.USER_ID, f.NICKNAME, sum(b.PRICE) as TOTAL_SALES
+SELECT b.writer_id, f.NICKNAME, sum(b.PRICE) as TOTAL_SALES
 FROM USED_GOODS_BOARD as b 
     JOIN USED_GOODS_USER as f 
     on b.writer_id = f.user_id
