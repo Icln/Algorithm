@@ -12,27 +12,38 @@ public class Main {
 		for (int i = 1; i <= switchNum; i++){
 			status[i] = Integer.parseInt(st.nextToken());
 		}
-
 		studentNum = Integer.parseInt(br.readLine());
 		for (int i = 0; i < studentNum; i++){
 			st = new StringTokenizer(br.readLine());
 			int s = Integer.parseInt(st.nextToken());
 			int n = Integer.parseInt(st.nextToken());
 			if (s == 1){
-				for (int j = n; j <= switchNum; j += n){
-					status[j] = status[j] == 0 ? 1: 0;
+				for (int j = n; j <= switchNum; j+= n){
+					if (status[j] == 0)
+						status[j] = 1;
+					else
+						status[j] = 0;
 				}
 			}
 			else{
-				status[n] = status[n] == 0 ? 1: 0;
-				
-				for(int j = 1; j <= switchNum / 2; j++) {
+				if (status[n] == 0)
+					status[n] = 1;
+				else
+					status[n] = 0;
+
+				for(int j = 1; j < switchNum / 2; j++) {
 					if(n + j > switchNum || n - j <= 0)
 						break;
-					
 					if(status[n - j] == status[n + j]) {
-						status[n - j] = status[n - j] == 0 ? 1: 0;
-						status[n + j] = status[n + j] == 0 ? 1: 0;
+						if (status[n - j] == 0)
+							status[n - j] = 1;
+						else
+							status[n - j] = 0;
+
+						if (status[n + j] == 0)
+							status[n + j] = 1;
+						else
+							status[n + j] = 0;
 					}
 					else break;
 				}
