@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
     static int r, c, k, answer;
     static int rl, cl;
-    static int[][] arr = new int[101][101];
+    static int[][] arr = new int[100][100];
     static class Pair implements Comparable<Pair>{
         int num;
         int cnt;
@@ -23,7 +23,7 @@ public class Main {
         }
     }
     public static void functionR(){
-        int[][] tmp = new int[101][101];
+        int[][] tmp = new int[100][100];
         int col = 0;
         for (int i = 0; i < rl; i++) {
             Map<Integer, Integer> cnt = new HashMap<>();
@@ -52,7 +52,7 @@ public class Main {
     }
 
     public static void functionC(){
-        int[][] tmp = new int[101][101];
+        int[][] tmp = new int[100][100];
         int row = 0;
         for (int i = 0; i < cl; i++) {
             Map<Integer, Integer> cnt = new HashMap<>();
