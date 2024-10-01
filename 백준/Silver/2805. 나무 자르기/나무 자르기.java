@@ -26,7 +26,7 @@ class Main{
 			r = Math.max(r, trees[i]);
 		}
 
-		l = 1;
+		l = 0;
 		h = 0;
 		while(l <= r){
 			int mid = (l + r) / 2;
