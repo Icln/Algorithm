@@ -1,42 +1,42 @@
 import java.util.*;
 import java.io.*;
 
-public class Main{
+class Main{
+	static int n, c, min, max, answer;
+	static int[] x;
 
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int n = Integer.parseInt(st.nextToken());
-		int c = Integer.parseInt(st.nextToken());
-		int[] arr = new int[n];
-		for (int i = 0; i < n; i++){
-			int tmp = Integer.parseInt(br.readLine());
-			arr[i] = tmp;
-		}
-		Arrays.sort(arr);
+		n = Integer.parseInt(st.nextToken());
+		c = Integer.parseInt(st.nextToken());
+		x = new int[n];
 
-		int start = 1;
-		int end = arr[arr.length - 1] - arr[0];
-		int result = 0;
+		for (int i = 0; i < n; i++)
+			x[i] = Integer.parseInt(br.readLine());
+		Arrays.sort(x);
 
-		while (start <= end){
-			int mid = (start + end) / 2;
-			int cur = arr[0];
+		min = 1;
+		max = x[n - 1] - x[0];
+		answer = 0;
+		while(min <= max){
+			int mid = (min + max) / 2;
+			int cur = x[0];
 			int cnt = 1;
 			for (int i = 1; i < n; i++){
-				if (arr[i] >= cur + mid){
-					cur = arr[i];
+				if (x[i] >= cur + mid){
+					cur = x[i];
 					cnt += 1;
 				}
 			}
 
 			if (cnt >= c){
-				result = mid;
-				start = mid + 1;
+				answer = mid;
+				min = mid + 1;
 			}
 			else
-				end = mid - 1;
+				max = mid - 1;
 		}
-		System.out.println(result);
+		System.out.println(answer);
 	}
 }
