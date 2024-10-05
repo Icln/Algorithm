@@ -1,75 +1,69 @@
 import java.util.*;
 import java.io.*;
 
-public class Main {
+class Main{
+	static int v, e, k;
+	static int[] dist;
+	static List<List<Node>> graph;
 	static class Node implements Comparable<Node>{
-		int cur, cost;
-		public Node(int cur, int cost){
-			this.cur = cur;
-			this.cost = cost;
+		int to, w;
+		public Node(int to, int w){
+			this.to = to;
+			this.w = w;
 		}
 
 		@Override
-		public int compareTo(Node node){
-			return Integer.compare(this.cost, node.cost);
+		public int compareTo(Node o){
+			return this.w - o.w;
 		}
 	}
-	static int INF = Integer.MAX_VALUE;
-	static Queue<Node> q = new PriorityQueue<>();
-	static List<Node>[] graph;
-	static int[] dist;
-	static int v, e, k;
 
-	private static void dijkstra(){
-		q.add(new Node(k, 0));
+	public static void bfs(){
+		PriorityQueue<Node> q = new PriorityQueue<>();
+		q.offer(new Node(k, 0));
 		dist[k] = 0;
 
 		while(!q.isEmpty()){
 			Node node = q.poll();
-			int cur = node.cur;
-			int cost = node.cost;
+			int cur = node.to;
+			int cost = node.w;
+			if (dist[cur] < cost) continue;
 
-			if (dist[cur] < cost)
-				continue;
-
-			for (Node tmp : graph[cur]){
-				int next = tmp.cur;
-				if (cost + tmp.cost < dist[next]){
-					dist[next] = cost + tmp.cost;
-					q.offer(new Node(next, dist[next]));
+			for (Node next : graph.get(cur)){
+				if (next.w + cost < dist[next.to]){
+					dist[next.to] = next.w + cost;
+					q.offer(new Node(next.to, dist[next.to]));
 				}
 			}
 		}
 
-		for (int i = 1; i <= v; i++){
-			if (dist[i] != INF)
-				System.out.println(dist[i]);
-			else
-				System.out.println("INF");
-		}
+		for (int i = 1; i <= v; i++)
+			System.out.println((dist[i] == Integer.MAX_VALUE) ? "INF" : dist[i]);
+
 	}
+
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		v = Integer.parseInt(st.nextToken());
 		e = Integer.parseInt(st.nextToken());
 		k = Integer.parseInt(br.readLine());
+
+		graph = new ArrayList<>();
 		dist = new int[v + 1];
-		graph = new ArrayList[v + 1];
-
-		for (int i = 1; i <= v; i ++){
-			dist[i] = INF;
-			graph[i] = new ArrayList<>();
+		for (int i = 0; i <= v; i++){
+			graph.add(new ArrayList<>());
+			dist[i] = Integer.MAX_VALUE;
 		}
 
-		for (int i = 0; i < e; i++){
+		for (int i = 0; i < e; i++) {
 			st = new StringTokenizer(br.readLine());
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
-			int c = Integer.parseInt(st.nextToken());
-			graph[a].add(new Node(b, c));
+			int from = Integer.parseInt(st.nextToken());
+			int to = Integer.parseInt(st.nextToken());
+			int w = Integer.parseInt(st.nextToken());
+			graph.get(from).add(new Node(to, w));
 		}
 
-		dijkstra();
+		bfs();
 	}
 }
