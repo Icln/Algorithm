@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int n, m, child, tmp, remain, idx;
+	static int n, m, child;
 	static long l, r, time;
 	static int[] times;
 	static boolean check(long mid){
@@ -41,19 +41,17 @@ public class Main {
 				l = mid + 1;
 		}
 
-		time -= 1;
 		child = m;
 		for (int i = 0; i < m; i++)
-			child += time / times[i];
-		remain = n - child;
-		
-		while (true){
-			if ((time + 1) / times[idx] != time / times[idx])
-				tmp++;
-			idx++;
-			if (tmp == remain)
+			child += (time - 1) / times[i];
+
+		for (int i = 0; i < m; i++) {
+			if (time % times[i] == 0)
+				child++;
+			if (child == n){
+				System.out.println(i + 1);
 				break;
+			}
 		}
-		System.out.println(idx);
 	}
 }
