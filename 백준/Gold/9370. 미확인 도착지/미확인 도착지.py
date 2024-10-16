@@ -43,16 +43,15 @@ for _ in range(int(input())):
         tmp = cand
         cnt = defaultdict(int)
         cnt[g], cnt[h] = 1, 1
-        if dist[cand] != INF:
-            while path[tmp] != tmp:
-                cnt[tmp] -= 1
-                tmp = path[tmp]
-            if s == g:
-                cnt[g] -= 1
-            if s == h:
-                cnt[h] -= 1
-            if cnt[g] == 0 and cnt[h] == 0:
-                result.append(cand)
+        while path[tmp] != tmp:
+            cnt[tmp] -= 1
+            tmp = path[tmp]
+        if s == g:
+            cnt[g] -= 1
+        if s == h:
+            cnt[h] -= 1
+        if cnt[g] == 0 and cnt[h] == 0:
+            result.append(cand)
 
     result.sort()
     print(*result)
