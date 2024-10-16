@@ -1,4 +1,3 @@
-from collections import defaultdict
 import sys
 import heapq
 INF = int(1e9)
@@ -40,17 +39,7 @@ for _ in range(int(input())):
     result = []
     for _ in range(t):
         cand = int(input())
-        tmp = cand
-        cnt = defaultdict(int)
-        cnt[g], cnt[h] = 1, 1
-        while path[tmp] != tmp:
-            cnt[tmp] -= 1
-            tmp = path[tmp]
-        if s == g:
-            cnt[g] -= 1
-        if s == h:
-            cnt[h] -= 1
-        if cnt[g] == 0 and cnt[h] == 0:
+        if dist[cand] % 2 == 1:
             result.append(cand)
 
     result.sort()
