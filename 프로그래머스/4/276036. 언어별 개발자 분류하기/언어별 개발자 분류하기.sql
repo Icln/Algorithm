@@ -1,8 +1,8 @@
 with fe as(
     select sum(code) as code
     from skillcodes
+    where category = "Front End"
     group by category
-    having category = "Front End"
 ), tmp as(
     SELECT ID, EMAIL,
         CASE
@@ -15,8 +15,7 @@ with fe as(
                 THEN 'C'
             ELSE NULL
         END AS GRADE
-    FROM
-        DEVELOPERS d, fe
+    FROM DEVELOPERS d, fe
 )
 select GRADE, ID, EMAIL
 FROM tmp
