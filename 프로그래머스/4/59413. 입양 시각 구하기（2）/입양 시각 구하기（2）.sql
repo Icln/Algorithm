@@ -1,15 +1,12 @@
-with recursive t as(
-    select 0 as h
-    union all
-    select h + 1
-    from t
-    where h < 23
-), tmp as(
-    select date_format(datetime, '%H') as HOUR, count(*) as c
-    from animal_outs
-    group by HOUR
-    order by HOUR
+with recursive tmp as(
+    select 0 as hour
+    from ANIMAL_OUTS
+    union
+    select hour + 1 as hour
+    from tmp 
+    where hour < 23
 )
-    
-select h, IFNULL(c, 0) as COUNT 
-from t left join tmp on h = HOUR
+select t.hour as hour, count(hour(datetime)) as count
+from tmp t left join ANIMAL_OUTS a on t.hour = hour(datetime)
+group by t.hour
+
