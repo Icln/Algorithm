@@ -42,10 +42,8 @@ public class Main {
 					swap(arr, dir, pos, cur[0], cur[1], nx, ny);
 				else {
 					int tmp = rotate(cur[0], cur[1], sx, sy, dir[cur[0]][cur[1]]);
-					if (tmp != dir[cur[0]][cur[1]]) {
-						dir[cur[0]][cur[1]] = tmp;
-						swap(arr, dir, pos, cur[0], cur[1], cur[0] + d[tmp][0], cur[1] + d[tmp][1]);
-					}
+					dir[cur[0]][cur[1]] = tmp;
+					swap(arr, dir, pos, cur[0], cur[1], cur[0] + d[tmp][0], cur[1] + d[tmp][1]);
 				}
 			}
 		}
@@ -71,7 +69,6 @@ public class Main {
 				int num = copyArr[nx][ny];
 				int tmpDir = copyDir[nx][ny];
 				copyArr[nx][ny] = 0;
-				copyDir[nx][ny] = tmpDir;
 				copyPos.remove(num);
 				dfs(copyArr, copyDir, copyPos, sum + num, nx, ny, tmpDir);
 				copyArr[nx][ny] = num;
