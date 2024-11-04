@@ -1,14 +1,12 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
 	static int n, m, g, r, answer;
 	static int[] red, green;
-	static int[][] arr, visitedR, visitedG;
 	static int[] dx = {-1, 1, 0, 0};
 	static int[] dy = {0, 0, -1, 1};
+	static int[][] arr, visitedR, visitedG;
 	static List<Integer> list = new ArrayList<>();
 	public static void combinations(int cnt, int idx, char color, HashSet<Integer> set){
 		if(color == 'R' && cnt == r){
@@ -16,12 +14,6 @@ public class Main {
 			return;
 		}
 		else if(color == 'G' && cnt == g){
-			visitedR = new int[n][m];
-			visitedG = new int[n][m];
-			for (int i = 0; i < n; i++) {
-				Arrays.fill(visitedR[i], -1);
-				Arrays.fill(visitedG[i], -1);
-			}
 			bfs();
 			return;
 		}
@@ -47,14 +39,18 @@ public class Main {
 	}
 	public static void bfs(){
 		Queue<int[]> q = new ArrayDeque<>();
+		visitedR = new int[n][m];
+		visitedG = new int[n][m];
 		for (int i = 0; i < r; i++) {
-			q.offer(new int[]{0, 0, red[i]});
-			visitedR[red[i]/m][red[i]%m] = 0;
+			q.offer(new int[]{1, 0, red[i]});
+			visitedR[red[i]/m][red[i]%m] = 1;
 		}
+
 		for (int i = 0; i < g; i++){
-			q.offer(new int[]{0, 1, green[i]});
-			visitedG[green[i]/m][green[i]%m] = 0;
+			q.offer(new int[]{1, 1, green[i]});
+			visitedG[green[i]/m][green[i]%m] = 1;
 		}
+
 		int cnt = 0;
 		while(!q.isEmpty()){
 			int[] cur = q.poll();
@@ -62,38 +58,36 @@ public class Main {
 			int color = cur[1];
 			int x = cur[2] / m;
 			int y = cur[2] % m;
-			if (visitedR[x][y] == visitedG[x][y])
-				continue;
-			
+			if (visitedR[x][y] == visitedG[x][y])  continue;
+
 			for (int i = 0; i < 4; i++) {
 				int nx = x + dx[i], ny = y + dy[i];
 				if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
 				if (arr[nx][ny] == 0) continue;
 				if (color == 0){ //  빨강
-					if (visitedG[nx][ny] == 0 || visitedR[nx][ny] != -1) continue;
-					if (visitedG[nx][ny] == -1 && visitedR[nx][ny] == -1){
+					if (visitedR[nx][ny] != 0 || visitedG[nx][ny] == 1) continue;
+					if (visitedR[nx][ny] == 0 && visitedG[nx][ny] == 0){
 						visitedR[nx][ny] = time + 1;
 						q.offer(new int[]{time + 1, color, nx * m + ny});
 					}
-					else if(visitedR[nx][ny] == -1 && visitedG[nx][ny] > 0 && visitedG[nx][ny] == time + 1){
+					else if(visitedR[nx][ny] == 0 && visitedG[nx][ny] == time + 1){
 						cnt++;
-						visitedR[nx][ny] = 0;
-						visitedG[nx][ny] = 0;
+						visitedR[nx][ny] = 1;
+						visitedG[nx][ny] = 1;
 					}
 				}
 				else{ // 초록
-					if (visitedR[nx][ny] == 0 || visitedG[nx][ny] != -1) continue;
-					if (visitedG[nx][ny] == -1 && visitedR[nx][ny] == -1){
+					if (visitedG[nx][ny] != 0 || visitedR[nx][ny] == 1) continue;
+					if (visitedG[nx][ny] == 0 && visitedR[nx][ny] == 0){
 						visitedG[nx][ny] = time + 1;
 						q.offer(new int[]{time + 1, color, nx * m + ny});
 					}
-					else if(visitedG[nx][ny] == -1 && visitedR[nx][ny] > 0 && visitedR[nx][ny] == time + 1){
+					else if(visitedG[nx][ny] == 0 && visitedR[nx][ny] == time + 1){
 						cnt++;
-						visitedG[nx][ny] = 0;
-						visitedR[nx][ny] = 0;
+						visitedG[nx][ny] = 1;
+						visitedR[nx][ny] = 1;
 					}
 				}
-
 			}
 		}
 		answer = Math.max(answer, cnt);
